@@ -1,4 +1,5 @@
 <?php
+use App\PeeDeeEff;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,10 +13,22 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('startAdminer.php');
 });
 
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
+
+Route::get('/fpdf', function (App\PeeDeeEff $fpdf) {
+    $fpdf->AddPage('P', 'A4');
+    $fpdf->SetFont('Courier', 'B', 18);
+    $fpdf->centreImage('storage/1.jpg', null, null, -300);
+    $fpdf->Output();
+});
+
+// Route::delete('/transactions/{transaction}', 'WebController@deleteTransaction');
+// Route::delete('/passports/{passport}', 'WebController@deletePassport');
+
+Auth::routes(['verify' => true]);
